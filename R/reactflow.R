@@ -20,10 +20,10 @@ reactflow <- function(nodes, edges, ..., width = NULL, height = NULL, elementId 
   # create widget
   htmlwidgets::createWidget(
     name = 'reactflow',
-    component,
+    reactR::reactMarkup(component),
     width = width,
     height = height,
-    package = 'ReactFlowR',
+    package = 'reactflow',
     elementId = elementId
   )
 }
