@@ -13,7 +13,7 @@ reactflow <- function(nodes, edges, ..., width = NULL, height = NULL, elementId 
   # describe a React component to send to the browser for rendering.
   
   component <- reactR::component(
-    "Reactflow",
+    "ReactFlow",
     list(nodes = nodes, edges = edges, ...)
   )
 
