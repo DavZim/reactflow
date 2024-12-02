@@ -1,5 +1,6 @@
 {
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@xyflow/react": "^12.3.5",
     "react": "^18.3.1",

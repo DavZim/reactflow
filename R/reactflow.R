@@ -9,7 +9,9 @@
 #' @import htmlwidgets
 #'
 #' @export
-reactflow <- function(nodes, edges, ..., width = NULL, height = NULL, elementId = NULL) {
+reactflow <- function(nodes, edges, controls = NULL, miniMap = NULL,
+                      background = NULL, ..., width = NULL, height = NULL,
+                      elementId = NULL) {
   # describe a React component to send to the browser for rendering.
   
   component <- reactR::component(
@@ -19,11 +21,11 @@ reactflow <- function(nodes, edges, ..., width = NULL, height = NULL, elementId 
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'reactflow',
+    name = "reactflow",
     reactR::reactMarkup(component),
     width = width,
     height = height,
-    package = 'reactflow',
+    package = "reactflow",
     elementId = elementId
   )
 }

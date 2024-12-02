@@ -4,7 +4,17 @@
 \alias{reactflow}
 \title{A}
 \usage{
-reactflow(nodes, edges, ..., width = NULL, height = NULL, elementId = NULL)
+reactflow(
+  nodes,
+  edges,
+  controls = NULL,
+  miniMap = NULL,
+  background = NULL,
+  ...,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{width}{a}
