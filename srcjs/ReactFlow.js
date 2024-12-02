@@ -18,9 +18,6 @@ import '@xyflow/react/dist/style.css';
 export default function ReactFlow({
   nodes,
   edges,
-  controls,
-  background,
-  miniMap,
   ...props
 }) {
   const [final_nodes, setNodes, onNodesChange] = useNodesState(nodes);
@@ -45,9 +42,9 @@ export default function ReactFlow({
       onConnect={onConnect}
       {...props}
     >
-      MiniMap: {miniMap},
-      Controls: {controls},
-      Background: {background}
+      <MiniMap></MiniMap>
+      <Controls></Controls>
+      <Background variant="dots" gap={12} size={1}></Background>
     </ReactFlowOrig>
   )
 }
