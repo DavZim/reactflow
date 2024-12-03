@@ -10,6 +10,11 @@ reactflow(
   controls = NULL,
   miniMap = NULL,
   background = NULL,
+  allow_edge_connection = TRUE,
+  use_dagre = FALSE,
+  dagre_direction = c("LR", "TB"),
+  dagre_config = list(nodeWidth = 200, nodeHeight = 40),
+  color_minimap = FALSE,
   ...,
   width = NULL,
   height = NULL,
@@ -17,6 +22,8 @@ reactflow(
 )
 }
 \arguments{
+\item{...}{elements passed to ReactFlow (see https://reactflow.dev/api-reference/react-flow)}
+
 \item{width}{a}
 
 \item{height}{a}

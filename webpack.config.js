@@ -6,6 +6,7 @@ module.exports = {
         path: path.join(__dirname, 'inst/htmlwidgets'),
         filename: 'reactflow.js'
     },
+    mode: "production",
     module: {
         rules: [
             {

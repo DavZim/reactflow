@@ -1,3 +1,7 @@
+#' @importFrom htmlwidgets JS
+#' @export
+htmlwidgets::JS
+
 #' A
 #'
 #' A
@@ -5,18 +9,30 @@
 #' @param width a
 #' @param height a
 #' @param elementId a
+#' @param ... elements passed to ReactFlow (see https://reactflow.dev/api-reference/react-flow)
 #'
 #' @import htmlwidgets
 #'
 #' @export
 reactflow <- function(nodes, edges, controls = NULL, miniMap = NULL,
-                      background = NULL, ..., width = NULL, height = NULL,
+                      background = NULL, allow_edge_connection = TRUE,
+                      use_dagre = FALSE, dagre_direction = c("LR", "TB"), 
+                      dagre_config = list(nodeWidth = 200, nodeHeight = 40),
+                      color_minimap = FALSE,
+                      ...,
+                      width = NULL, height = NULL,
                       elementId = NULL) {
-  # describe a React component to send to the browser for rendering.
+
+  dagre_direction <- match.arg(dagre_direction)
   
+  # describe a React component to send to the browser for rendering.
   component <- reactR::component(
     "ReactFlow",
-    list(nodes = nodes, edges = edges, ...)
+    list(nodes = nodes, edges = edges, elementId = elementId,
+         allow_edge_connection = allow_edge_connection, 
+         use_dagre = use_dagre, dagre_direction = dagre_direction,
+         dagre_config = dagre_config, color_minimap = color_minimap,
+         ...)
   )
 
   # create widget
@@ -25,20 +41,27 @@ reactflow <- function(nodes, edges, controls = NULL, miniMap = NULL,
     reactR::reactMarkup(component),
     width = width,
     height = height,
-    package = "reactflow",
-    elementId = elementId
+    package = "reactflow"
   )
 }
 
+#' See also https://reactflow.dev/api-reference/components/minimap
 #' @export
-miniMap <- function(...) {
+#' @examples
+#' mini_map()
+#' 
+#' # add pan and zoom function to mini map
+#' mini_map(pannable = NA, zoomable = NA)
+mini_map <- function(...) {
   reactR::React$MiniMap(...)
 }
 
+#' see also https://reactflow.dev/api-reference/components/controls
 #' @export
 controls <- function(...) {
   reactR::React$Controls(...)
 }
+#' see also https://reactflow.dev/api-reference/components/background
 #' @export
 background <- function(...) {
   reactR::React$Background(...)

@@ -15,7 +15,46 @@ knitr::opts_chunk$set(
 
 # reactflow
 
-An experimental R package to use [`@xyflow/react`](https://reactflow.dev) in R and shiny. Not working at the moment!
+An experimental R package to use [`@xyflow/react`](https://reactflow.dev) in R and shiny. Barely working at the moment!
+
+
+# ToDos
+
+[ ] add MiniMap, Controls, Background functionality, also ViewportLogger, NodeInspector, ChangeLogger, BaseEdge, ControlButton, EdgeLabelRenderer, EdgeText, Handle, NodeResizer, NodeResizeControl, NodeToolbar, Panel, ViewportPanel: https://reactflow.dev/api-reference/components
+[ ] allow custom functions for onNodesChange, onEdgesChange, onConnect
+[s] allow get ID from shiny (click function)
+
+[ ] fix reactive values to redraw layout https://reactflow.dev/api-reference/hooks/use-update-node-internals
+[ ] setNodes/setEdges from R? also Getters?
+[ ] examples, eg https://reactflow.dev/examples/interaction/interaction-props
+[ ] edge label at end
+
+
+Layout Examples
+
+
+## Examples
+
+```r
+nodes <- list(
+  list(id = "s", type = "input", data = list(label = "Start"), 
+       className = "startNode", position = list(x = 0, y = 0)),
+  list(id = "m", data = list(label = "Mid"), position = list(
+    x = 0, y = 100)),
+  list(id = "e", data = list(label = "End"), 
+       className = "endNode", position = list(x = 50, y = 200), 
+       type = "output")
+)
+
+edges <- list(
+  list(id = "s-m", source = "s", target = "m", type = "smoothstep", animated = TRUE),
+  list(id = "m-e", source = "m", target = "e", type = "smoothstep", animated = TRUE)
+)
+
+reactflow::reactflow(nodes, edges)
+```
+
+
 
 
 ## Development
@@ -29,6 +68,10 @@ system("yarn run webpack")
 devtools::document()
 devtools::install(quick = TRUE)
 
+# or in one go:
+# system("yarn install && yarn run webpack"); devtools::document(); devtools::install(quick=TRUE)
+
 # start a shiny app that should display a flow
 shiny::runApp()
 ```
+
