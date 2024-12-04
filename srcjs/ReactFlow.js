@@ -5,9 +5,9 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
-  MiniMap,
-  Controls,
-  Background,
+//  MiniMap,
+//  Controls,
+//  Background,
   BackgroundVariant,
   Handle,
   Position,
@@ -162,9 +162,6 @@ console.log(nodes);
       }}
       {...props}
     >
-      <MiniMap pannable zoomable nodeColor={color_minimap ? nodeColor : undefined}/>
-      <Controls />
-      <Background variant="dots" gap={12} size={1}></Background>
     </ReactFlowOrig>
   )
 }
