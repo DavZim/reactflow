@@ -2,9 +2,15 @@ import { reactWidget } from 'reactR'
 
 import ReactFlow from './ReactFlow'
 
+import {
+  MiniMap,
+  Controls,
+  Background
+} from '@xyflow/react'
+
 
 reactWidget('reactflow', 'output', {
-  ReactFlow
+  ReactFlow, MiniMap, Controls, Background
 })
 
 

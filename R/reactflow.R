@@ -14,7 +14,7 @@ htmlwidgets::JS
 #' @import htmlwidgets
 #'
 #' @export
-reactflow <- function(nodes, edges, controls = NULL, miniMap = NULL,
+reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
                       background = NULL, allow_edge_connection = TRUE,
                       use_dagre = FALSE, dagre_direction = c("LR", "TB"), 
                       dagre_config = list(nodeWidth = 200, nodeHeight = 40),
@@ -31,18 +31,20 @@ reactflow <- function(nodes, edges, controls = NULL, miniMap = NULL,
     list(nodes = nodes, edges = edges, elementId = elementId,
          allow_edge_connection = allow_edge_connection, 
          use_dagre = use_dagre, dagre_direction = dagre_direction,
-         dagre_config = dagre_config, color_minimap = color_minimap,
-         ...)
+         dagre_config = dagre_config, color_minimap = color_minimap)
   )
 
   # create widget
-  htmlwidgets::createWidget(
+  hw <- htmlwidgets::createWidget(
     name = "reactflow",
     reactR::reactMarkup(component),
     width = width,
     height = height,
     package = "reactflow"
   )
+
+  hw$x$tag$children <- list(controls, background, mini_map)
+  hw
 }
 
 #' See also https://reactflow.dev/api-reference/components/minimap
