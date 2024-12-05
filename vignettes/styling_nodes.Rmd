@@ -2,7 +2,7 @@
 title: "Styling Nodes"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{styling_nodes}
+  %\VignetteIndexEntry{Styling Nodes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
