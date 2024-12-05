@@ -83,7 +83,6 @@ export default function ReactFlow({
   edges,
   allow_edge_connection,
   use_dagre, dagre_direction, dagre_config,
-  color_minimap,
   ...props
 }) {
   

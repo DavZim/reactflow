@@ -18,7 +18,6 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
                       background = NULL, allow_edge_connection = TRUE,
                       use_dagre = FALSE, dagre_direction = c("LR", "TB"), 
                       dagre_config = list(nodeWidth = 200, nodeHeight = 40),
-                      color_minimap = FALSE,
                       ...,
                       width = NULL, height = NULL,
                       elementId = NULL) {
@@ -31,7 +30,7 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
     list(nodes = nodes, edges = edges, elementId = elementId,
          allow_edge_connection = allow_edge_connection, 
          use_dagre = use_dagre, dagre_direction = dagre_direction,
-         dagre_config = dagre_config, color_minimap = color_minimap)
+         dagre_config = dagre_config, ...)
   )
 
   # create widget
@@ -43,17 +42,70 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
     package = "reactflow"
   )
 
-  hw$x$tag$children <- list(controls, background, mini_map)
+  children <- list(controls, background, mini_map)
+  children <- children[!sapply(children, is.null)]
+  
+  if (length(children) > 0) hw$x$tag$children <- children
   hw
 }
 
-#' See also https://reactflow.dev/api-reference/components/minimap
+#' Creates a mini map for the ReactFlow component
+#'
+#' Note the mini map is not a standalone component, it is a child of ReactFlow
+#' 
+#' @param ... arguments passed to ReactFlow, see official source below
+#'
+#' @source <https://reactflow.dev/api-reference/components/minimap>
+#' 
 #' @export
 #' @examples
-#' mini_map()
+#' nodes <- list(
+#'   list(id = "1", position = list(x = 0, y = 0), data = list(label = "1"),
+#'        type = "input"),
+#'   list(id = "2", position = list(x = 50, y = 100), data = list(label = "2")),
+#'   list(id = "3", position = list(x = 100, y = 200), data = list(label = "3"),
+#'        type = "output")
+#' )
+#' edges <- list(
+#'  list(id = "e1-2", source = "1", target = "2"),
+#'  list(id = "e2-3", source = "2", target = "3"),
+#'  list(id = "e1-3", source = "1", target = "3")
+#' )
+#' 
+#' # basic mini map
+#' reactflow(nodes, edges, mini_map())
 #' 
 #' # add pan and zoom function to mini map
-#' mini_map(pannable = NA, zoomable = NA)
+#' reactflow(
+#'   nodes,
+#'   edges,
+#'   mini_map(pannable = TRUE, zoomable = TRUE, nodeColor = "coral")
+#' )
+#' 
+#' # provide a function for nodeColor
+#' node_color <- JS("(node) => {
+#'   if (node.type === 'input') return 'lightblue'
+#'   if (node.id === '2') return 'lightgreen'
+#'   return 'coral'
+#' }")
+#' reactflow(
+#'   nodes,
+#'   edges,
+#'   mini_map(nodeColor = node_color)
+#' )
+#' 
+#' # add nodeComponent to style the nodes in the minimap
+#' node_component <- JS(reactR::babel_transform('
+#'  ({ x, y }) => {
+#'    return <circle cx={x} cy={y} r="25" fill="coral" />
+#'  }
+#' '))
+#' reactflow(
+#'   nodes,
+#'   edges,
+#'   mini_map(nodeComponent = node_component)
+#' )
+#' 
 mini_map <- function(...) {
   reactR::React$MiniMap(...)
 }

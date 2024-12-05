@@ -1,9 +1,12 @@
 Package: reactflow
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: Create beautiful, customizable, and interactive diagrams based on React Flow
+Version: 0.0.1
+Authors@R: c(
+    person("David", "Zimmermann-Kollenda", , "david_j_zimmermann@hotmail.com", role = c("aut", "cre"))
+  )
+Description: reactflow is a light wrapper around the React Flow library. It allows you to create interactive diagrams, flows, graphs etc.
+URL: https://github.com/davzim/reactflow/ https://davzim.github.io/reactflow/
+BugReports: https://github.com/DavZim/reactflow/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -12,3 +15,8 @@ Imports:
     htmltools,
     htmlwidgets,
     reactR
+Suggests:
+    knitr,
+    rmarkdown,
+    V8
+VignetteBuilder: knitr

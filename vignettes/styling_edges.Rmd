@@ -1,0 +1,26 @@
+---
+title: "Styling Edges"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Styling Edges}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(reactflow)
+```
+
+
+
+[ ] Basic types, animations, labels
+[ ] colors and formatting: via direct styling, via classes
+[ ] JS functions? React functions with Babel?!
+[ ] selecting highlighted one
