@@ -86,26 +86,17 @@ export default function ReactFlow({
   ...props
 }) {
   
-  // const { fitView } = useReactFlow();
-  
-console.log("======================================")
-console.log(nodes);
   // if dagre is enabled, we need to layout the nodes
   if (use_dagre) {
     // Overwrite nodes with layouted nodes
     nodes = getLayoutedNodes(nodes, edges, dagre_direction, dagre_config);
   }
-console.log(nodes);
     
   const [final_nodes, setNodes, onNodesChange] = useNodesState(nodes);
   const [final_edges, setEdges, onEdgesChange] = useEdgesState(edges);
   
-  // TODO allow MiniMap, Controls, Background to be passed as props
-  
   // TODO make onNodeChange, onEdgeChange, onConnect a JS function that can be passed ?? 
 
-  console.log("Updated Reactflow!");
-  console.log(final_nodes);
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   // for the minimap
@@ -147,16 +138,12 @@ console.log(nodes);
       nodeTypes={nodeTypes}
       
       onNodeDrag={(event, node, nodes) => {
-        console.log("DRAG!");
-        console.log("Setting input value for drag on " + elementId + "_click for node " + node.id);
         Shiny.setInputValue(elementId + "_click", {node: node.id, edge: null});
       }}
       onNodeClick={(event, node) => {
-        console.log("Setting input value for click on " + elementId + "_click for node " + node.id);
         Shiny.setInputValue(elementId + "_click", {node: node.id, edge: null});
       }}
       onEdgeClick={(event, edge) => {
-        console.log("Setting input value for click on " + elementId + "_click for edge " + edge.id);
         Shiny.setInputValue(elementId + "_click", {node: null, edge: edge.id});
       }}
       {...props}
