@@ -3,10 +3,11 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   automatic_layouting: automatic_layouting.html
+  examples: examples.html
   shiny: shiny.html
   styling_edges: styling_edges.html
   styling_nodes: styling_nodes.html
-last_built: 2024-12-05T10:34Z
+last_built: 2024-12-06T15:57Z
 urls:
   reference: https://davzim.github.io/reactflow/reference
   article: https://davzim.github.io/reactflow/articles
