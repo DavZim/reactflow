@@ -68,15 +68,383 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">.react-flow__node</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">green</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davzim/reactflow/" class="external-link">reactflow</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
+</h2>
+<p>To create a basic flow using <code>reactflow</code>, you need to
+define nodes and edges and call the <code>reactflow</code> function with
+these arguments.</p>
+<p>Note to label a node, you provide a <code>label</code> argument in
+the <code>data</code> list, whereas the <code>label</code> is a direct
+argument to an edge.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"1"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 1"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"2"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span>, y <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"3"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 3"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-2"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"2"</span>, label <span class="op">=</span> <span class="st">"Edge 1"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e2-3"</span>, source <span class="op">=</span> <span class="st">"2"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-3"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-ac96cb3ee4656e2e9ec3" class="reactflow html-widget" style="width:700px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>You can change the width of the output widget directly in the call to
+[<code><a href="../reference/reactflow.html">reactflow()</a></code>]:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-e5c8c404fe174e4c81bd" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>By default, you can use connect new edges by dragging from one node
+to another. To disable this, you can set</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  allow_edge_connection <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-36aa3d2a04d42bbc2145" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":false,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><div class="section level3">
+<h3 id="ui-elements">UI Elements<a class="anchor" aria-label="anchor" href="#ui-elements"></a>
+</h3>
+<p>The <code>reactflow</code> package provides some easy to use UI
+elements to customize the usage and display of a flow. Namely
+[<code><a href="../reference/background.html">background()</a></code>], [<code><a href="../reference/controls.html">controls()</a></code>],
+[<code><a href="../reference/mini_map.html">mini_map()</a></code>],</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  background <span class="op">=</span> <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  controls <span class="op">=</span> <span class="fu"><a href="../reference/controls.html">controls</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  mini_map <span class="op">=</span> <span class="fu"><a href="../reference/mini_map.html">mini_map</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-febe03efa1a2d8d52a86" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Controls","attribs":[],"children":[]},{"name":"Background","attribs":[],"children":[]},{"name":"MiniMap","attribs":[],"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h3>
+<p>All arguments passed to <code><a href="../reference/background.html">background()</a></code> are passed to the
+underlying <code>react-flow</code> component. The official
+<code>background</code> documentation can be found here: <a href="https://reactflow.dev/api-reference/components/background" class="external-link uri">https://reactflow.dev/api-reference/components/background</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"1"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 1"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"2"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span>, y <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"3"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 3"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-2"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"2"</span>, label <span class="op">=</span> <span class="st">"Edge 1"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e2-3"</span>, source <span class="op">=</span> <span class="st">"2"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-3"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  background <span class="op">=</span> <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-1fb4450895fe099f74a1" class="reactflow html-widget" style="width:700px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-1fb4450895fe099f74a1">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Background","attribs":[],"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>An example using the extra arguments can be found below</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  background <span class="op">=</span> <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span></span>
+<span>    color <span class="op">=</span> <span class="st">"beige"</span>,</span>
+<span>    variant <span class="op">=</span> <span class="st">"lines"</span>,</span>
+<span>    gap <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>    lineWidth <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-10b3b7155e8045a1b2ad" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-10b3b7155e8045a1b2ad">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Background","attribs":{"color":"beige","variant":"lines","gap":50,"lineWidth":2},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><div class="section level4">
+<h4 id="multiple-backgrounds">Multiple Backgrounds<a class="anchor" aria-label="anchor" href="#multiple-backgrounds"></a>
+</h4>
+<p>You can also add multiple backgrounds to the flow by passing multiple
+<code><a href="../reference/background.html">background()</a></code> elements.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"beige"</span>,</span>
+<span>    variant <span class="op">=</span> <span class="st">"lines"</span>,</span>
+<span>    gap <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>    lineWidth <span class="op">=</span> <span class="fl">3</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    offset <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"lightgray"</span>,</span>
+<span>    variant <span class="op">=</span> <span class="st">"dots"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-4018eef1a407a0df6b52" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-4018eef1a407a0df6b52">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Background","attribs":{"id":1,"color":"beige","variant":"lines","gap":40,"lineWidth":3},"children":[]},{"name":"Background","attribs":{"id":2,"size":4,"offset":3,"color":"lightgray","variant":"dots"},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="section level3">
+<h3 id="controls">Controls<a class="anchor" aria-label="anchor" href="#controls"></a>
+</h3>
+<p>All arguments passed to <code><a href="../reference/controls.html">controls()</a></code> are passed to the
+underlying <code>react-flow</code> component. The official
+<code>controls</code> documentation can be found here: <a href="https://reactflow.dev/api-reference/components/controls" class="external-link uri">https://reactflow.dev/api-reference/components/controls</a>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"1"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 1"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"2"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span>, y <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"3"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 3"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-2"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"2"</span>, label <span class="op">=</span> <span class="st">"Edge 1"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e2-3"</span>, source <span class="op">=</span> <span class="st">"2"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-3"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  controls <span class="op">=</span> <span class="fu"><a href="../reference/controls.html">controls</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-5b1b2f4ad92281566982" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-5b1b2f4ad92281566982">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Controls","attribs":[],"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>An example using the extra arguments can be found below</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  controls <span class="op">=</span> <span class="fu"><a href="../reference/controls.html">controls</a></span><span class="op">(</span></span>
+<span>    position <span class="op">=</span> <span class="st">"top-right"</span>,</span>
+<span>    orientation <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
+<span>    showZoom <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    showFitView <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    showIntereactive <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-25c3e940e6859592f801" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-25c3e940e6859592f801">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Controls","attribs":{"position":"top-right","orientation":"horizontal","showZoom":true,"showFitView":false,"showIntereactive":true},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="mini-map">Mini Map<a class="anchor" aria-label="anchor" href="#mini-map"></a>
+</h3>
+<p>All arguments passed to <code><a href="../reference/mini_map.html">mini_map()</a></code> are passed to the
+underlying <code>react-flow</code> component. The official
+<code>miniMap</code> documentation can be found here: <a href="https://reactflow.dev/api-reference/components/minimap" class="external-link uri">https://reactflow.dev/api-reference/components/minimap</a>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"1"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 1"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"2"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span>, y <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"3"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 3"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-2"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"2"</span>, label <span class="op">=</span> <span class="st">"Edge 1"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e2-3"</span>, source <span class="op">=</span> <span class="st">"2"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"e1-3"</span>, source <span class="op">=</span> <span class="st">"1"</span>, target <span class="op">=</span> <span class="st">"3"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  mini_map <span class="op">=</span> <span class="fu"><a href="../reference/mini_map.html">mini_map</a></span><span class="op">(</span>pannable <span class="op">=</span> <span class="cn">TRUE</span>, zoomable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-3f27c09be0c60bb52829" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-3f27c09be0c60bb52829">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"MiniMap","attribs":{"pannable":true,"zoomable":true},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="section level2">
+<h2 id="styling">Styling<a class="anchor" aria-label="anchor" href="#styling"></a>
+</h2>
+<p>Each component can be styled individually or using CSS. Eg setting
+the following CSS class, will make all nodes green.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">.react-flow__node</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">green</span> <span class="at">!important</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>}</span></code></pre></div>
+<p>See also <code>app.R</code> TODO</p>
+<div class="section level3">
+<h3 id="nodes">Nodes<a class="anchor" aria-label="anchor" href="#nodes"></a>
+</h3>
+<div class="section level4">
+<h4 id="using-classname-and-custom-css">Using <code>className</code> and custom CSS<a class="anchor" aria-label="anchor" href="#using-classname-and-custom-css"></a>
+</h4>
+<p>Using <code>className</code>s, we can assign custom CSS to the nodes
+in the mini-map.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">.startNode</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">lightgreen</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>}</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="fu">.endNode</span> {</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">coral</span><span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>}</span></code></pre></div>
 <style type="text/css">
-.react-flow__node {
-  background-color: green !important;
+.startNode {
+  background-color: lightgreen;
+}
+.endNode {
+  background-color: coral;
 }
 </style>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nodes2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"1"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 1"</span><span class="op">)</span>,</span>
+<span>       className <span class="op">=</span> <span class="st">"startNode"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"2"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span>, y <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"3"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 3"</span><span class="op">)</span>,</span>
+<span>       className <span class="op">=</span> <span class="st">"endNode"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  nodes <span class="op">=</span> <span class="va">nodes2</span>,</span>
+<span>  edges <span class="op">=</span> <span class="va">edges</span>,</span>
+<span>  mini_map <span class="op">=</span> <span class="fu"><a href="../reference/mini_map.html">mini_map</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  color_minimap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-416566eb193bf50d04e6" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-416566eb193bf50d04e6">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"},"className":"startNode"},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"},"className":"endNode"}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40},"color_minimap":true},"children":[{"name":"MiniMap","attribs":[],"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="section level3">
+<h3 id="edges">Edges<a class="anchor" aria-label="anchor" href="#edges"></a>
+</h3>
+</div>
+<div class="section level3">
+<h3 id="mini-map-1">Mini Map<a class="anchor" aria-label="anchor" href="#mini-map-1"></a>
+</h3>
+<p>The official <code>miniMap</code> documentation can be found here: <a href="https://reactflow.dev/api-reference/components/minimap" class="external-link uri">https://reactflow.dev/api-reference/components/minimap</a>.
+For example, the <code>nodeColor</code> argument can be used to change
+the color of the nodes in the mini map.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  <span class="va">nodes</span>,</span>
+<span>  <span class="va">edges</span>,</span>
+<span>  mini_map <span class="op">=</span> <span class="fu"><a href="../reference/mini_map.html">mini_map</a></span><span class="op">(</span></span>
+<span>    pannable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    zoomable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    nodeColor <span class="op">=</span> <span class="st">"coral"</span>,</span>
+<span>    position <span class="op">=</span> <span class="st">"top-right"</span>,</span>
+<span>    maskColor <span class="op">=</span> <span class="st">"lightgray"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-72cbf064100ce560a04c" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-72cbf064100ce560a04c">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"}},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"}}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"MiniMap","attribs":{"pannable":true,"zoomable":true,"nodeColor":"coral","position":"top-right","maskColor":"lightgray"},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>Using <code>className</code>s, we can assign custom CSS to the nodes
+in the mini-map.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">.startNode</span> {</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">lightgreen</span><span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>}</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="fu">.endNode</span> {</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">coral</span><span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>}</span></code></pre></div>
+<style type="text/css">
+.startNode {
+  background-color: lightgreen;
+}
+.endNode {
+  background-color: coral;
+}
+</style>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nodes2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"1"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 1"</span><span class="op">)</span>,</span>
+<span>       type <span class="op">=</span> <span class="st">"input"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"2"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">100</span>, y <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 2"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"3"</span>, position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Node 3"</span><span class="op">)</span>,</span>
+<span>       type <span class="op">=</span> <span class="st">"output"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  nodes <span class="op">=</span> <span class="va">nodes2</span>,</span>
+<span>  edges <span class="op">=</span> <span class="va">edges</span>,</span>
+<span>  mini_map <span class="op">=</span> <span class="fu"><a href="../reference/mini_map.html">mini_map</a></span><span class="op">(</span></span>
+<span>    nodeColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">JS</a></span><span class="op">(</span><span class="st">"</span></span>
+<span><span class="st">    function nodeColor(node) {</span></span>
+<span><span class="st">      switch (node.type) {</span></span>
+<span><span class="st">        case 'input':</span></span>
+<span><span class="st">          return '#6ede87';</span></span>
+<span><span class="st">        case 'output':</span></span>
+<span><span class="st">          return '#6865A5';</span></span>
+<span><span class="st">        default:</span></span>
+<span><span class="st">          return '#ff0072';</span></span>
+<span><span class="st">      }</span></span>
+<span><span class="st">    }"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  color_minimap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
+<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<div id="htmlwidget-d11fc4360aa0230696d7" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-d11fc4360aa0230696d7">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"Node 1"},"type":"input"},{"id":"2","position":{"x":100,"y":100},"data":{"label":"Node 2"}},{"id":"3","position":{"x":0,"y":200},"data":{"label":"Node 3"},"type":"output"}],"edges":[{"id":"e1-2","source":"1","target":"2","label":"Edge 1"},{"id":"e2-3","source":"2","target":"3"},{"id":"e1-3","source":"1","target":"3"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40},"color_minimap":true},"children":[{"name":"MiniMap","attribs":{"nodeColor":"\n    function nodeColor(node) {\n      switch (node.type) {\n        case 'input':\n          return '#6ede87';\n        case 'output':\n          return '#6865A5';\n        default:\n          return '#ff0072';\n      }\n    }"},"children":[]}]},"class":"reactR_markup"},"evals":["tag.children.0.attribs.nodeColor"],"jsHooks":[]}</script><p>TODO make minimap colorful</p>
+</div>
+<div class="section level3">
+<h3 id="background-1">Background<a class="anchor" aria-label="anchor" href="#background-1"></a>
+</h3>
+</div>
+<div class="section level3">
+<h3 id="controls-1">Controls<a class="anchor" aria-label="anchor" href="#controls-1"></a>
+</h3>
+<p>There is very little styling that can be applied to
+[<code><a href="../reference/controls.html">controls()</a></code>] directly. However, we can apply styling using
+the CSS class <code>react-flow__controls</code>.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="layouting">Layouting<a class="anchor" aria-label="anchor" href="#layouting"></a>
+</h2>
+<div class="section level3">
+<h3 id="automatic-layout">Automatic Layout<a class="anchor" aria-label="anchor" href="#automatic-layout"></a>
+</h3>
+</div>
+</div>
+<div class="section level2">
+<h2 id="interactivity-with-shiny">Interactivity with Shiny<a class="anchor" aria-label="anchor" href="#interactivity-with-shiny"></a>
+</h2>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davzim/reactflow/" class="external-link">reactflow</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -98,8 +466,11 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
 <span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
-<div id="htmlwidget-ac96cb3ee4656e2e9ec3" class="reactflow html-widget" style="width:700px;height:432.632880098888px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"1"},"type":"input"},{"id":"2","position":{"x":50,"y":100},"data":{"label":"2"}},{"id":"3","position":{"x":100,"y":200},"data":{"label":"3"},"type":"output"}],"edges":[{"id":"e1-2","source":"1","target":"2","type":"straight"},{"id":"e2-3","source":"2","target":"3","type":"smoothstep","label":"A","animated":true},{"id":"e1-3","source":"1","target":"3","type":"bezier"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Background","attribs":{"variant":"dots","gap":12,"size":2},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script></main>
+<div id="htmlwidget-21c7483268bafca56cec" class="reactflow html-widget" style="width:700px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-21c7483268bafca56cec">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"1"},"type":"input"},{"id":"2","position":{"x":50,"y":100},"data":{"label":"2"}},{"id":"3","position":{"x":100,"y":200},"data":{"label":"3"},"type":"output"}],"edges":[{"id":"e1-2","source":"1","target":"2","type":"straight"},{"id":"e2-3","source":"2","target":"3","type":"smoothstep","label":"A","animated":true},{"id":"e1-3","source":"1","target":"3","type":"bezier"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Background","attribs":{"variant":"dots","gap":12,"size":2},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
