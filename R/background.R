@@ -39,13 +39,13 @@
 #'   edges,
 #'   background(
 #'     id = "1",
-#'     color = "#f1f1f1",
+#'     color = "black",
 #'     variant = "lines",
 #'     gap = 10
 #'   ),
 #'   background(
 #'     id = "2",
-#'     color = "#cccccc",
+#'     color = "darkgray",
 #'     variant = "lines"
 #'   )
 #' )

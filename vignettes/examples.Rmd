@@ -14,11 +14,355 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{css}
+  
+```{r}
+library(reactflow)
+```
+
+
+# Basic Usage
+
+To create a basic flow using `reactflow`, you need to define nodes and edges and call the `reactflow` function with these arguments.
+
+Note to label a node, you provide a `label` argument in the `data` list, whereas the `label` is a direct argument to an edge.
+
+```{r}
+nodes <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1")),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"))
+)
+
+edges <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "Edge 1"),
+  list(id = "e2-3", source = "2", target = "3"),
+  list(id = "e1-3", source = "1", target = "3")
+)
+reactflow(
+  nodes,
+  edges
+)
+```
+
+You can change the width of the output widget directly in the call to [`reactflow()`]:
+
+```{r}
+reactflow(
+  nodes,
+  edges,
+  width = "100%"
+)
+```
+
+By default, you can use connect new edges by dragging from one node to another.
+To disable this, you can set
+
+```{r}
+reactflow(
+  nodes,
+  edges,
+  allow_edge_connection = FALSE,
+  width = "100%"
+)
+```
+
+
+
+## UI Elements
+
+The `reactflow` package provides some easy to use UI elements to customize the usage and display of a flow.
+Namely [`background()`], [`controls()`], [`mini_map()`],
+
+```{r}
+reactflow(
+  nodes,
+  edges,
+  background = background(),
+  controls = controls(),
+  mini_map = mini_map(),
+  width = "100%"
+)
+```
+
+## Background
+
+All arguments passed to `background()` are passed to the underlying `react-flow` component.
+The official `background` documentation can be found here: <https://reactflow.dev/api-reference/components/background>.
+
+```{r}
+
+nodes <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1")),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"))
+)
+
+edges <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "Edge 1"),
+  list(id = "e2-3", source = "2", target = "3"),
+  list(id = "e1-3", source = "1", target = "3")
+)
+
+reactflow(
+  nodes,
+  edges,
+  background = background()
+)
+```
+
+An example using the extra arguments can be found below
+
+```{r}
+reactflow(
+  nodes,
+  edges,
+  background = background(
+    color = "beige",
+    variant = "lines",
+    gap = 50,
+    lineWidth = 2
+  ),
+  width = "100%"
+)
+```
+
+### Multiple Backgrounds
+
+You can also add multiple backgrounds to the flow by passing multiple `background()` elements.
+
+```{R}
+reactflow(
+  nodes,
+  edges,
+  background(
+    id = 1,
+    color = "beige",
+    variant = "lines",
+    gap = 40,
+    lineWidth = 3
+  ),
+  background(
+    id = 2,
+    size = 4,
+    offset = 3,
+    color = "lightgray",
+    variant = "dots"
+  ),
+  width = "100%"
+)
+```
+
+## Controls
+
+All arguments passed to `controls()` are passed to the underlying `react-flow` component.
+The official `controls` documentation can be found here: <https://reactflow.dev/api-reference/components/controls>.
+
+
+```{r}
+nodes <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1")),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"))
+)
+
+edges <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "Edge 1"),
+  list(id = "e2-3", source = "2", target = "3"),
+  list(id = "e1-3", source = "1", target = "3")
+)
+
+reactflow(
+  nodes,
+  edges,
+  controls = controls(),
+  width = "100%"
+)
+```
+
+An example using the extra arguments can be found below
+
+```{r}
+reactflow(
+  nodes,
+  edges,
+  controls = controls(
+    position = "top-right",
+    orientation = "horizontal",
+    showZoom = TRUE,
+    showFitView = FALSE,
+    showIntereactive = TRUE
+  ),
+  width = "100%"
+)
+```
+
+
+## Mini Map
+
+All arguments passed to `mini_map()` are passed to the underlying `react-flow` component.
+The official `miniMap` documentation can be found here: <https://reactflow.dev/api-reference/components/minimap>.
+
+```{r}
+nodes <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1")),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"))
+)
+
+edges <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "Edge 1"),
+  list(id = "e2-3", source = "2", target = "3"),
+  list(id = "e1-3", source = "1", target = "3")
+)
+
+reactflow(
+  nodes,
+  edges,
+  mini_map = mini_map(pannable = TRUE, zoomable = TRUE),
+  width = "100%"
+)
+```
+
+
+# Styling
+
+Each component can be styled individually or using CSS.
+Eg setting the following CSS class, will make all nodes green.
+
+```css
 .react-flow__node {
   background-color: green !important;
 }
 ```
+
+
+See also `app.R` TODO
+
+
+## Nodes
+
+### Using `className` and custom CSS
+
+Using `className`s, we can assign custom CSS to the nodes in the mini-map.
+
+```{css}
+.startNode {
+  background-color: lightgreen;
+}
+.endNode {
+  background-color: coral;
+}
+```
+
+
+```{r}
+nodes2 <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1"),
+       className = "startNode"),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"),
+       className = "endNode")
+)
+reactflow(
+  nodes = nodes2,
+  edges = edges,
+  mini_map = mini_map(),
+  color_minimap = TRUE,
+  width = "100%"
+)
+```
+
+
+
+
+## Edges
+
+
+## Mini Map
+
+The official `miniMap` documentation can be found here: <https://reactflow.dev/api-reference/components/minimap>.
+For example, the `nodeColor` argument can be used to change the color of the nodes in the mini map.
+
+```{r}
+reactflow(
+  nodes,
+  edges,
+  mini_map = mini_map(
+    pannable = TRUE,
+    zoomable = TRUE,
+    nodeColor = "coral",
+    position = "top-right",
+    maskColor = "lightgray"
+  ),
+  width = "100%"
+)
+```
+
+Using `className`s, we can assign custom CSS to the nodes in the mini-map.
+
+```{css}
+.startNode {
+  background-color: lightgreen;
+}
+.endNode {
+  background-color: coral;
+}
+```
+
+
+```{r}
+nodes2 <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1"),
+       type = "input"),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"),
+       type = "output")
+)
+reactflow(
+  nodes = nodes2,
+  edges = edges,
+  mini_map = mini_map(
+    nodeColor = JS("
+    function nodeColor(node) {
+      switch (node.type) {
+        case 'input':
+          return '#6ede87';
+        case 'output':
+          return '#6865A5';
+        default:
+          return '#ff0072';
+      }
+    }")
+  ),
+  color_minimap = TRUE,
+  width = "100%"
+)
+```
+TODO make minimap colorful
+
+
+
+
+## Background
+
+
+
+## Controls
+
+There is very little styling that can be applied to [`controls()`] directly.
+However, we can apply styling using the CSS class `react-flow__controls`.
+
+
+# Layouting
+
+## Automatic Layout
+
+
+# Interactivity with Shiny
+
+
+
+
 
 
 ```{r setup}
