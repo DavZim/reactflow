@@ -1,4 +1,4 @@
-import React, { memo, Fragment, useCallback } from 'react';
+import React, { memo, Fragment, useCallback, useEffect, useState } from 'react';
 
 import {
   ReactFlow as ReactFlowOrig,
@@ -86,47 +86,34 @@ export default function ReactFlow({
   ...props
 }) {
   
-  // if dagre is enabled, we need to layout the nodes
+  var nodes_used = nodes;
+  
   if (use_dagre) {
-    // Overwrite nodes with layouted nodes
-    nodes = getLayoutedNodes(nodes, edges, dagre_direction, dagre_config);
+    nodes_used = getLayoutedNodes(nodes_used, edges, dagre_direction, dagre_config);
   }
-    
-  const [final_nodes, setNodes, onNodesChange] = useNodesState(nodes);
+  
+  const [final_nodes, setNodes, onNodesChange] = useNodesState(nodes_used);
   const [final_edges, setEdges, onEdgesChange] = useEdgesState(edges);
   
-  // TODO make onNodeChange, onEdgeChange, onConnect a JS function that can be passed ?? 
+  useEffect(() => {
+    setNodes(nodes_used);
+    setEdges(edges);
+  }, [nodes, edges]);
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
-  // for the minimap
-  function nodeColor(node) {
-    switch (node.type) {
-      case 'input':
-        return 'lightgreen';
-      case 'output':
-        return 'coral';
-      default:
-        return 'lightblue';
-    }
-  }
-    
-  // when the layout changes, recalculate the positions
   const onLayout = useCallback(
     (dagre_direction) => {
-      nodes2 = getLayoutedNodes(nodes, edges, dagre_direction, dagre_config);
-  
-      setNodes([...nodes2]);
-      setEdges([...edges]);
-      
+      const layoutedNodes = getLayoutedNodes(nodes, edges, dagre_direction, dagre_config);
+      setNodes(layoutedNodes);
+      setEdges(edges);
       window.requestAnimationFrame(() => {
         fitView();
       });
-      
     },
     [nodes, edges, dagre_direction, dagre_config],
   );
-  
+
   return (
     <ReactFlowOrig
       nodes={final_nodes}
@@ -136,18 +123,17 @@ export default function ReactFlow({
       onLayout={onLayout}
       onConnect={allow_edge_connection ? onConnect : undefined}
       nodeTypes={nodeTypes}
-      
-      onNodeDrag={(event, node, nodes) => {
+      onNodeClick={(event, node) => {
         Shiny.setInputValue(elementId + "_click", {node: node.id, edge: null});
       }}
-      onNodeClick={(event, node) => {
+      // the node is selected when dragging in CSS! this makes it consistent
+      onNodeDrag={(event, node) => {
         Shiny.setInputValue(elementId + "_click", {node: node.id, edge: null});
       }}
       onEdgeClick={(event, edge) => {
         Shiny.setInputValue(elementId + "_click", {node: null, edge: edge.id});
       }}
       {...props}
-    >
-    </ReactFlowOrig>
-  )
+    />
+  );
 }

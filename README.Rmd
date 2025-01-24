@@ -36,7 +36,7 @@ Layout Examples
 
 ## Examples
 
-```r
+```{r}
 nodes <- list(
   list(id = "s", type = "input", data = list(label = "Start"), 
        className = "startNode", position = list(x = 0, y = 0)),

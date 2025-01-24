@@ -2,14 +2,21 @@
 #' @export
 htmlwidgets::JS
 
-#' A
+#' A ReactFlow object
 #'
-#' A
-#' @param message a
-#' @param width a
+#' @param nodes a
+#' @param edges 
+#' @param controls 
+#' @param mini_map 
+#' @param background 
+#' @param allow_edge_connection 
+#' @param use_dagre 
+#' @param dagre_direction 
+#' @param dagre_config 
+#' @param ... elements passed to ReactFlow (see <https://reactflow.dev/api-reference/react-flow>)
+#' @param width 
 #' @param height a
 #' @param elementId a
-#' @param ... elements passed to ReactFlow (see https://reactflow.dev/api-reference/react-flow)
 #'
 #' @import htmlwidgets
 #'
@@ -21,7 +28,7 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
                       ...,
                       width = NULL, height = NULL,
                       elementId = NULL) {
-
+  
   dagre_direction <- match.arg(dagre_direction)
   
   # describe a React component to send to the browser for rendering.
@@ -32,16 +39,20 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
          use_dagre = use_dagre, dagre_direction = dagre_direction,
          dagre_config = dagre_config, ...)
   )
-
+  
   # create widget
   hw <- htmlwidgets::createWidget(
     name = "reactflow",
     reactR::reactMarkup(component),
     width = width,
     height = height,
-    package = "reactflow"
+    package = "reactflow",
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      defaultWidth = "auto",
+      defaultHeight = "auto"
+    )
   )
-
+  
   children <- list(controls, background, mini_map)
   children <- children[!sapply(children, is.null)]
   
@@ -53,11 +64,12 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
 #' Called by HTMLWidgets to produce the widget's root element.
 #' @noRd
 widget_html.reactflow <- function(id, style, class, ...) {
-  htmltools::tagList(
+  htmltools::tags$div(
     # Necessary for RStudio viewer version < 1.2
     reactR::html_dependency_corejs(),
     reactR::html_dependency_react(),
     reactR::html_dependency_reacttools(),
+    
     htmltools::tags$div(id = id, class = class, style = style)
   )
 }
@@ -79,8 +91,8 @@ widget_html.reactflow <- function(id, style, class, ...) {
 #' @name reactflow-shiny
 #'
 #' @export
-reactflowOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'reactflow', width, height, package = 'reactflow')
+reactflowOutput <- function(outputId, width = "100%", height = "400px"){
+  htmlwidgets::shinyWidgetOutput(outputId, "reactflow", width, height, package = "reactflow")
 }
 
 #' @rdname reactflow-shiny

@@ -50,7 +50,7 @@ You can change the width of the output widget directly in the call to [`reactflo
 reactflow(
   nodes,
   edges,
-  width = "100%"
+  width = "250px"
 )
 ```
 
@@ -61,8 +61,7 @@ To disable this, you can set
 reactflow(
   nodes,
   edges,
-  allow_edge_connection = FALSE,
-  width = "100%"
+  allow_edge_connection = FALSE
 )
 ```
 
@@ -79,8 +78,7 @@ reactflow(
   edges,
   background = background(),
   controls = controls(),
-  mini_map = mini_map(),
-  width = "100%"
+  mini_map = mini_map()
 )
 ```
 
@@ -121,8 +119,7 @@ reactflow(
     variant = "lines",
     gap = 50,
     lineWidth = 2
-  ),
-  width = "100%"
+  )
 )
 ```
 
@@ -147,8 +144,7 @@ reactflow(
     offset = 3,
     color = "lightgray",
     variant = "dots"
-  ),
-  width = "100%"
+  )
 )
 ```
 
@@ -174,8 +170,7 @@ edges <- list(
 reactflow(
   nodes,
   edges,
-  controls = controls(),
-  width = "100%"
+  controls = controls()
 )
 ```
 
@@ -191,8 +186,7 @@ reactflow(
     showZoom = TRUE,
     showFitView = FALSE,
     showIntereactive = TRUE
-  ),
-  width = "100%"
+  )
 )
 ```
 
@@ -218,8 +212,7 @@ edges <- list(
 reactflow(
   nodes,
   edges,
-  mini_map = mini_map(pannable = TRUE, zoomable = TRUE),
-  width = "100%"
+  mini_map = mini_map(pannable = TRUE, zoomable = TRUE)
 )
 ```
 
@@ -240,6 +233,37 @@ See also `app.R` TODO
 
 
 ## Nodes
+
+### Node Types
+
+Note that nodes have different types, eg `type = "input", "output", "default", and "group"`.
+See also official documentation at <https://reactflow.dev/api-reference/types/node>.
+
+Node types of `input` do not have any ingoing connections, whereas `output`s do not have any outgoing connections.
+
+
+
+### Direct Styling of Nodes
+
+```{r}
+nodes2 <- list(
+  list(id = "1", position = list(x = 0, y = 0),
+       data = list(label = "I have direct Styling"),
+       style = list("background-color" = "#2196f3",
+                 color = "white",
+                 "border-color" = "#0964AE",
+                 "border-width" = "2px",
+                 "font-size" = "1.25em",
+                 filter = "drop-shadow(10px 10px 5px gray)")),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 0, y = 200), data = list(label = "Node 3"))
+)
+reactflow(
+  nodes = nodes2,
+  edges = edges
+)
+```
+
 
 ### Using `className` and custom CSS
 
@@ -267,8 +291,7 @@ reactflow(
   nodes = nodes2,
   edges = edges,
   mini_map = mini_map(),
-  color_minimap = TRUE,
-  width = "100%"
+  color_minimap = TRUE
 )
 ```
 
@@ -276,6 +299,81 @@ reactflow(
 
 
 ## Edges
+
+### Edge Types and Styling
+
+ReactFlow knows different edge types, these are
+
+- `straight`
+- `step`
+- `smoothstep`
+- `simplebezier`
+
+Additionally, each edge can be animated by setting `animated = TRUE`.
+
+The full documentation can be found here:
+<https://reactflow.dev/api-reference/types/edge>
+
+
+```{r}
+nodes2 <- list(
+  list(id = "1", position = list(x = 0, y = 0), data = list(label = "Node 1")),
+  list(id = "2", position = list(x = 100, y = 100), data = list(label = "Node 2")),
+  list(id = "3", position = list(x = 200, y = 200), data = list(label = "Node 3"))
+)
+
+edges2 <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "straight",
+       type = "straight"),
+  list(id = "e2-3", source = "2", target = "3", label = "smoothstep + animated", 
+       type = "smoothstep", animated = TRUE),
+  list(id = "e1-3", source = "1", target = "3", label = "simplebezier",
+       type = "simplebezier")
+)
+
+reactflow(
+  nodes2,
+  edges2
+)
+```
+
+Note that you can slow down the animation by using the following CSS
+```css
+.react-flow__edge.animated path {
+  animation: dashdraw 2s linear infinite;
+}
+```
+```{css, echo=FALSE}
+.slow_anim .react-flow__edge.animated path {
+  animation: dashdraw 2s linear infinite;
+}
+```
+
+<div class="slow_anim">
+
+```{R, class.source="slow_anim"}
+edges2 <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "straight",
+       type = "straight", animated = TRUE),
+  list(id = "e2-3", source = "2", target = "3", label = "smoothstep + animated", 
+       type = "smoothstep", animated = TRUE),
+  list(id = "e1-3", source = "1", target = "3", label = "simplebezier",
+       type = "simplebezier", animated = TRUE)
+)
+
+reactflow(
+  nodes,
+  edges2
+)
+```
+
+</div>
+
+
+### Direct Styling
+
+### Using `className` and custom CSS
+
 
 
 ## Mini Map
@@ -293,8 +391,7 @@ reactflow(
     nodeColor = "coral",
     position = "top-right",
     maskColor = "lightgray"
-  ),
-  width = "100%"
+  )
 )
 ```
 
@@ -326,16 +423,15 @@ reactflow(
     function nodeColor(node) {
       switch (node.type) {
         case 'input':
-          return '#6ede87';
+          return 'coral';
         case 'output':
-          return '#6865A5';
+          return 'lightblue';
         default:
-          return '#ff0072';
+          return 'gray';
       }
     }")
   ),
-  color_minimap = TRUE,
-  width = "100%"
+  color_minimap = TRUE
 )
 ```
 TODO make minimap colorful
@@ -355,34 +451,178 @@ However, we can apply styling using the CSS class `react-flow__controls`.
 
 # Layouting
 
-## Automatic Layout
+Normally, the layout of the nodes is done automatically by specifying the `position` arguments of the nodes.
+There are however some layouting algorithms that can be used to automatically layout the nodes.
+One solution is to use a tool like [`ggraph`](https://www.data-imaginist.com/posts/2017-02-06-ggraph-introduction-layouts/index.html) and its [`create_layout()`](https://ggraph.data-imaginist.com/reference/ggraph.html) function (with some transformation done to x and y).
+
+Alternatively, you can use the built-in [`dagre`](https://github.com/dagrejs/dagre) solution.
+
+## Automatic Layout using `dagre`
+
+```{r}
+nodes_orig <- list(
+  list(id = "start", type = "input", data = list(label = "Start Node")),
+  list(id = "mid", data = list(label = "Mid Node")),
+  list(id = "mid2", data = list(label = "Mid Node 2")),
+  list(id = "end", type = "output", data = list(label = "End Node"))
+)
+edges_orig <- list(
+  list(source = "start", target = "mid", id = "start-mid"),
+  list(source = "start", target = "mid2", id = "start-mid2"),
+  list(source = "mid", target = "end", id = "mid-end"),
+  list(source = "mid2", target = "end", id = "mid2-end")
+)
+reactflow(
+  nodes = nodes_orig,
+  edges = edges_orig,
+  
+  use_dagre = TRUE, dagre_direction = "TB",
+  dagre_config = list(nodeWidth = 250, nodeHeight = 50)
+)
+```
 
 
 # Interactivity with Shiny
 
-
-
-
-
-
-```{r setup}
+```r
+library(shiny)
+library(bslib)
 library(reactflow)
 
-nodes <- list(
-  list(id = "1", position = list(x = 0, y = 0), data = list(label = "1"), type = "input"),
-  list(id = "2", position = list(x = 50, y = 100), data = list(label = "2")),
-  list(id = "3", position = list(x = 100, y = 200), data = list(label = "3"), type = "output")
-)
-edges <- list(
-  list(id = "e1-2", source = "1", target = "2", type = "straight"),
-  list(id = "e2-3", source = "2", target = "3", type = "smoothstep", label = "A", 
-       animated = TRUE),
-  list(id = "e1-3", source = "1", target = "3", type = "bezier")
+ui <- page_sidebar(
+  sidebar = sidebar(
+    textInput("node_name", "Node Name"),
+    selectInput("node_prev", "Previous Node", ""),
+    selectInput("node_next", "Next Node", ""),
+    actionButton("add_node", "Add Node"),
+    verbatimTextOutput("selected_el")
+  ),
+  card(
+    reactflowOutput("my_graph", height = "100%"),
+  )
 )
 
-reactflow(
-  nodes = nodes,
-  edges = edges,
-  background(variant = "dots", gap = 12, size = 2)
+nodes_orig <- list(
+  list(id = "start", data = list(label = "Start Node")),
+  list(id = "mid", data = list(label = "Mid Node")),
+  list(id = "end", data = list(label = "End Node"))
 )
+
+edges_orig <- list(
+  list(source = "start", target = "mid", id = "start-mid"),
+  list(source = "mid", target = "end", id = "mid-end")
+)
+
+server <- function(input, output, session) {
+  output$selected_el <- renderPrint(str(input$my_graph_click))
+
+  
+  nodes <- reactiveVal(nodes_orig)
+  edges <- reactiveVal(edges_orig)
+  
+  observeEvent(nodes(), {
+    all_nodes <- sapply(nodes(), "[[", "id")
+    updateTextInput(session, "node_name", value = "")
+    updateSelectInput(session, "node_prev", choices = c("", all_nodes))
+    updateSelectInput(session, "node_next", choices = c("", all_nodes))
+  })
+  
+  
+  observeEvent(input$add_node, {
+    new_id <- as.character(length(nodes()) + 1)
+    
+    new_node <- list(id = new_id, data = list(label = input$node_name))
+    
+    from <- input$node_prev
+    to <- input$node_next
+    
+    new_edge <- list(
+      if (from != "") list(id = paste(from, new_id, sep = "-"), source = from, target = new_id),
+      if (to != "") list(id = paste(new_id, to, sep = "-"), source = new_id, target = to)
+    )
+    new_edge <- new_edge[sapply(new_edge, length) > 0]
+    
+    nodes(c(nodes(), list(new_node)))
+    edges(c(edges(), new_edge))
+  })
+  
+  output$my_graph <- renderReactflow({
+    reactflow(
+      nodes = nodes(),
+      edges = edges(),
+      
+      controls(),
+      elementId = "my_graph",
+      
+      use_dagre = TRUE, dagre_direction = "TB",
+      dagre_config = list(nodeWidth = 250, nodeHeight = 50),
+      fitView = TRUE,
+      allow_edge_connection = FALSE, # disable edge creation
+      nodesDraggable = TRUE # default value, can be set to FALSE to disable dragging
+    )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
+## Styling Selected Elements
+
+Using CSS, we can style the selected elements in the flow.
+Note that it's easier to override the CSS variable for coloring the edges.
+See also a list of all ReactFlow CSS variables here: <https://reactflow.dev/learn/customization/theming>
+
+```css
+.react-flow__node.selected {
+  background-color: coral !important;
+  color: white !important;
+}
+:root {
+  --xy-edge-stroke-selected: coral;
+}
+```
+
+```r
+library(shiny)
+library(bslib)
+library(reactflow)
+
+ui <- page_sidebar(
+  tags$head(tags$style(
+    ".react-flow__node.selected {
+       background-color: coral !important;
+       color: white !important;
+     }
+     :root {
+        --xy-edge-stroke-selected: coral;
+      }"
+  )),
+  card(
+    reactflowOutput("my_graph")
+  )
+)
+
+server <- function(input, output, session) {
+  output$my_graph <- renderReactflow({
+    reactflow(
+      nodes = list(
+          list(id = "start", type = "input", data = list(label = "Start Node"),
+               position = list(x = 0, y = 0)),
+          list(id = "mid", data = list(label = "Mid Node"),
+               position = list(x = 0, y = 100)),
+          list(id = "end", type = "output", data = list(label = "End Node"),
+               position = list(x = 0, y = 200))
+        )
+      ,
+      edges = list(
+        list(source = "start", target = "mid", id = "start-mid"),
+        list(source = "mid", target = "end", id = "mid-end")
+      )
+      
+    )
+  })
+}
+
+shinyApp(ui, server)
 ```

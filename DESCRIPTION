@@ -1,6 +1,6 @@
 Package: reactflow
 Title: Create beautiful, customizable, and interactive diagrams based on React Flow
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
     person("David", "Zimmermann-Kollenda", , "david_j_zimmermann@hotmail.com", role = c("aut", "cre"))
   )
