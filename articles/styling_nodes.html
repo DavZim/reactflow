@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">reactflow</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,8 @@
 
 
 
-<script src="styling_nodes_files/core-js-2.5.3/shim.min.js"></script><script src="styling_nodes_files/react-18.2.0/react.min.js"></script><script src="styling_nodes_files/react-18.2.0/react-dom.min.js"></script><script src="styling_nodes_files/reactwidget-2.0.0/react-tools.js"></script><script src="styling_nodes_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="styling_nodes_files/reactflow-binding-0.0.1/reactflow.js"></script><div class="row">
+<script src="styling_nodes_files/core-js-2.5.3/shim.min.js"></script><script src="styling_nodes_files/react-18.2.0/react.min.js"></script><script src="styling_nodes_files/react-18.2.0/react-dom.min.js"></script><script src="styling_nodes_files/reactwidget-2.0.0/react-tools.js"></script><link href="styling_nodes_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="styling_nodes_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="styling_nodes_files/reactflow-binding-0.0.2/reactflow.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Styling Nodes</h1>
@@ -86,10 +87,10 @@
 <span>  nodes <span class="op">=</span> <span class="va">nodes</span>,</span>
 <span>  edges <span class="op">=</span> <span class="va">edges</span>,</span>
 <span>  <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"dots"</span>, gap <span class="op">=</span> <span class="fl">12</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `bindFillRole()` only works on htmltools::tag() objects (e.g., div(),</span></span>
-<span><span class="co">#&gt; p(), etc.), not objects of type 'shiny.tag.list'.</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="html-fill-item">
 <div id="htmlwidget-ac96cb3ee4656e2e9ec3" class="reactflow html-widget" style="width:700px;height:432.632880098888px;"></div>
+</div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"1","position":{"x":0,"y":0},"data":{"label":"1"},"type":"input"},{"id":"2","position":{"x":50,"y":100},"data":{"label":"2"}},{"id":"3","position":{"x":100,"y":200},"data":{"label":"3"},"type":"output"}],"edges":[{"id":"e1-2","source":"1","target":"2","type":"straight"},{"id":"e2-3","source":"2","target":"3","type":"smoothstep","label":"A","animated":true},{"id":"e1-3","source":"1","target":"3","type":"bezier"}],"allow_edge_connection":true,"use_dagre":false,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":40}},"children":[{"name":"Background","attribs":{"variant":"dots","gap":12,"size":2},"children":[]}]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>[ ] Basic types [ ] colors and formatting: via direct styling, via
 classes [ ] HTML nodes [ ] styling selected one</p>
 <div class="section level2">
