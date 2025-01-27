@@ -2,12 +2,12 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  automatic_layouting: automatic_layouting.html
+  example_targets: example_targets.html
   examples: examples.html
-  shiny: shiny.html
+  fully_customized_html_nodes: fully_customized_html_nodes.html
   styling_edges: styling_edges.html
   styling_nodes: styling_nodes.html
-last_built: 2025-01-24T13:21Z
+last_built: 2025-01-27T15:37Z
 urls:
   reference: https://davzim.github.io/reactflow/reference
   article: https://davzim.github.io/reactflow/articles
