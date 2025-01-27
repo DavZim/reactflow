@@ -16,7 +16,7 @@ htmlwidgets::JS
 #' @param ... elements passed to ReactFlow (see <https://reactflow.dev/api-reference/react-flow>)
 #' @param width 
 #' @param height a
-#' @param elementId a
+#' @param clickId a
 #'
 #' @import htmlwidgets
 #'
@@ -27,14 +27,14 @@ reactflow <- function(nodes, edges, controls = NULL, mini_map = NULL,
                       dagre_config = list(nodeWidth = 200, nodeHeight = 40),
                       ...,
                       width = NULL, height = NULL,
-                      elementId = NULL) {
+                      clickId = NULL) {
   
   dagre_direction <- match.arg(dagre_direction)
   
   # describe a React component to send to the browser for rendering.
   component <- reactR::component(
     "ReactFlow",
-    list(nodes = nodes, edges = edges, elementId = elementId,
+    list(nodes = nodes, edges = edges, clickId = clickId,
          allow_edge_connection = allow_edge_connection, 
          use_dagre = use_dagre, dagre_direction = dagre_direction,
          dagre_config = dagre_config, ...)

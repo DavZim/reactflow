@@ -1,5 +1,5 @@
 ---
-title: "examples"
+title: "Examples"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{examples}
@@ -296,6 +296,52 @@ reactflow(
 ```
 
 
+### Styling using `htmlNodes`
+
+The reactflow R package brings its own `html` node Type, which allows you to style a node using HTML and CSS.
+
+To use this, you have to set the type of the node to `html` and provide the HTML code in the `html` data argument.
+
+```{r}
+nodes2 <- list(
+  list(
+    id = "1",
+    type = "html", # this is required
+    data = list(
+      html = "I am a <b>HTML</b> node" # define your own HTML here
+    ),
+    position = list(x = 0, y = 0)
+  ),
+  list(
+    id = "2",
+    type = "html",
+    data = list(
+      html = as.character( # the HTML can be created using htmltools or shiny as well!
+        htmltools::div(
+          style = paste(
+            "color: red; border: 2px solid gray; padding: 10px;",
+            "border-radius: 10px; font-weight: 600;"
+          ),
+          
+          "I am a ", htmltools::code("HTML"), "node"
+        )
+      )
+    ),
+    position = list(x = 200, y = 100)
+  )
+)
+
+edges2 <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "Edge 1")
+)
+
+reactflow(
+  nodes2,
+  edges2
+)
+```
+
+See also the Vignette on Fully Customized HTML Nodes.
 
 
 ## Edges
@@ -491,10 +537,13 @@ library(reactflow)
 
 ui <- page_sidebar(
   sidebar = sidebar(
+    h4("Add Node"),
     textInput("node_name", "Node Name"),
     selectInput("node_prev", "Previous Node", ""),
     selectInput("node_next", "Next Node", ""),
     actionButton("add_node", "Add Node"),
+    hr(),
+    h4("Selected Element"),
     verbatimTextOutput("selected_el")
   ),
   card(
@@ -516,7 +565,6 @@ edges_orig <- list(
 server <- function(input, output, session) {
   output$selected_el <- renderPrint(str(input$my_graph_click))
 
-  
   nodes <- reactiveVal(nodes_orig)
   edges <- reactiveVal(edges_orig)
   
@@ -552,7 +600,7 @@ server <- function(input, output, session) {
       edges = edges(),
       
       controls(),
-      elementId = "my_graph",
+      clickId = "my_graph_click",
       
       use_dagre = TRUE, dagre_direction = "TB",
       dagre_config = list(nodeWidth = 250, nodeHeight = 50),

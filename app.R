@@ -113,7 +113,6 @@ server <- function(input, output, session) {
     reactflow(
       nodes = nodes,
       edges = edges,
-      elementId = "widgetOutput",
       snapToGrid = c(20, 20),
       allow_edge_connection = FALSE, # disable edge creation
       nodesDraggable = TRUE # default value, can be set to FALSE to disable dragging

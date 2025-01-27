@@ -1,0 +1,27 @@
+---
+title: "example_targets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{example_targets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The [`targets`](https://books.ropensci.org/targets/) R package is a wonderful tool for reproducible data science workflows.
+To visualize a targets pipeline, there is the default `tar_visnetwork()` function, which creates a network visualization of the pipeline.
+
+As this information is by definition a graph, `reactflow` can be used to visualize and style the pipeline in a more interactive way.
+
+Note we won't be covering the `targets` package in this vignette, the code to create the targets pipeline etc is included in `reactflow` in `data-raw/example_targets.R` on Github.
+
+
+```{r setup}
+library(reactflow)
+```

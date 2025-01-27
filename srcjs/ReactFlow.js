@@ -78,7 +78,7 @@ const getLayoutedNodes = (innodes, inedges, direction = 'TB', config) => {
 };
 
 export default function ReactFlow({
-  elementId,
+  clickId,
   nodes,
   edges,
   allow_edge_connection,
@@ -124,14 +124,14 @@ export default function ReactFlow({
       onConnect={allow_edge_connection ? onConnect : undefined}
       nodeTypes={nodeTypes}
       onNodeClick={(event, node) => {
-        Shiny.setInputValue(elementId + "_click", {node: node.id, edge: null});
+        Shiny.setInputValue(clickId, {node: node.id, edge: null});
       }}
       // the node is selected when dragging in CSS! this makes it consistent
       onNodeDrag={(event, node) => {
-        Shiny.setInputValue(elementId + "_click", {node: node.id, edge: null});
+        Shiny.setInputValue(clickId, {node: node.id, edge: null});
       }}
       onEdgeClick={(event, edge) => {
-        Shiny.setInputValue(elementId + "_click", {node: null, edge: edge.id});
+        Shiny.setInputValue(clickId, {node: null, edge: edge.id});
       }}
       {...props}
     />

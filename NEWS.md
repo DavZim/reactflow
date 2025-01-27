@@ -1,11 +1,12 @@
+
+# reactflow v0.2
+
+[ ] full examples vignette
+  - htmlNode example
+- clean-up vignettes
+
+
 # reactflow v0.1
 
-[s] reactflow inside of vignettes?!
-[ ] Vignettes for the different components: ReactFlow, MiniMap, Background, Controls, Node styling, Edge styling, shiny
-
-[s] nodeComponent in MiniMap
-[ ] Shiny reactivity, redrawing issue
-
-[ ] pkgdown website
-
-[ ] Styled examples / showcases:
+- first initial version with miniMap, controls, and background
+- basic shiny integration

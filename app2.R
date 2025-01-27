@@ -48,7 +48,6 @@ server <- function(input, output, session) {
     reactflow(
       nodes = nodes,
       edges = edges,
-      elementId = "widgetOutput",
       
       use_dagre = TRUE, dagre_direction = input$dagre_direction,
       fitView = TRUE,

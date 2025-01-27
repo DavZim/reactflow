@@ -14,9 +14,14 @@ RoxygenNote: 7.3.2
 Imports: 
     htmltools,
     htmlwidgets,
-    reactR
+    reactR,
+    bsicons
 Suggests:
     knitr,
     rmarkdown,
+    targets,
     V8
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+LazyData: true
