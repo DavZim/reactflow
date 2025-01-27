@@ -32,22 +32,22 @@ Then, we also style our handle a little-bit to make it a bit more distinct.
 
 ```{css}
 .react-flow__node.react-flow__node-html {
-padding: 10px;
-border-radius: 15px;
-border: 4px solid #00808073;
-width: 150px;
-font-size: 12px;
-color: var(--xy-node-color, var(--xy-node-color-default));
-text-align: center;
-background-color: var(--xy-node-background-color, var(--xy-node-background-color-default));
+  padding: 10px;
+  border-radius: 15px;
+  border: 4px solid #00808073;
+  width: 150px;
+  font-size: 12px;
+  color: var(--xy-node-color, var(--xy-node-color-default));
+  text-align: center;
+  background-color: var(--xy-node-background-color, var(--xy-node-background-color-default));
 }
 
 .react-flow__handle{
-width: 3em;
-height: 5px;
-background-color: teal;
-border: none;
-border-radius: 0;
+  width: 3em;
+  height: 5px;
+  background-color: teal;
+  border: none;
+  border-radius: 0;
 }
 ```
 

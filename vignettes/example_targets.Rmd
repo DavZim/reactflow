@@ -1,5 +1,5 @@
 ---
-title: "example_targets"
+title: "Example `reactflow` of a `targets` Pipeline"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{example_targets}
@@ -21,7 +21,135 @@ As this information is by definition a graph, `reactflow` can be used to visuali
 
 Note we won't be covering the `targets` package in this vignette, the code to create the targets pipeline etc is included in `reactflow` in `data-raw/example_targets.R` on Github.
 
+This `reactflow` package provides two sample datasets, `targets_meta` (output of `targets::tar_meta()`) and `targets_network` (output of `targets::tar_network()`).
+
+To prepare the data for the `reactflow` visualization, we need to convert the `targets_network` data to a format that `reactflow` can understand.
+That is, we need to convert the data.frame to a list of nodes and a list of edges.
 
 ```{r setup}
 library(reactflow)
+library(bsicons)
+tar <- targets_network
+
+# merge meta information to identify files
+tar$vertices <- merge(tar$vertices, targets_meta[, c("name", "format")], 
+                      by.x = "name", by.y = "name")
+
+icons <- list(
+  file = bs_icon("file-earmark-fill", size = 15),
+  stem = bs_icon("type", size = 15),
+  "function" = bs_icon("braces", size = 15)
+)
+
+nodes <- lapply(seq_len(nrow(tar$vertices)), \(i) {
+  el <- tar$vertices[i, ]
+  
+  name <- el$name
+  icon <- icons[[ifelse(!is.na(el$format) & el$format == "file", "file", el$type)]]
+  time <- ifelse(el$status == "uptodate", 
+                 ifelse(is.na(el$seconds), "NA", paste0(el$seconds, "s")),
+                 "NA")
+  
+  
+  html <- as.character(
+    htmltools::div(
+      style = "display: flex; flex-direction: row; align-items: center;",
+      class = el$status,
+      htmltools::div(icon, style = "margin-right: 10px;"),
+      htmltools::div(
+        htmltools::div(
+          style = "font-size: 1.1em; font-weight: bold; color: #999999",
+          name
+        ),
+        htmltools::div(
+          style = "font-size: 0.8em; font-weight: 600; color: darkgray;",
+          paste0("Time: ", time)
+        )
+      )
+    )
+  )
+  list(
+    id = el$name,
+    type = "html",
+    data = list(html = html,
+                status = el$status, # for mini-map later on
+                handle = list(direction = "LR"))
+  )
+})
+
+
+edges <- apply(tar$edges, 1, \(x) {
+  list(
+    id = paste(x[["from"]], x[["to"]], sep = "_"),
+    source = x[["from"]],
+    target = x[["to"]]
+  )
+})
+```
+
+Note we also need to set some general CSS to make the nodes look a bit nicer
+
+```{css}
+.react-flow__node.react-flow__node-html {
+  padding: 10px;
+  border-radius: 15px;
+  border: 4px solid gray;
+  width: 150px;
+  font-size: 12px;
+  text-align: center;
+  background-color: var(--xy-node-background-color, var(--xy-node-background-color-default));
+}
+
+.react-flow__node.react-flow__node-html:has(.outdated) {
+  border-color: lightcoral;
+  color: lightcoral;
+}
+.react-flow__node.react-flow__node-html:has(.uptodate) {
+  border-color: mediumseagreen;
+  color: mediumseagreen;
+}
+
+/* style the handles */
+.react-flow__handle{
+  width: 5px;
+  height: 5px;
+  border-radius: 100px;
+}
+
+/* make edges a bit thicker */
+.react-flow__edge > path {
+    stroke: gray;
+    stroke-width: 3px;
+}
+```
+
+
+Last but not least, we can create our reactflow like this:
+
+```{r}
+reactflow(
+  nodes = nodes,
+  edges = edges,
+  mini_map(
+    pannable = TRUE,
+    zoomable = TRUE,
+    nodeColor = JS("
+    function nodeColor(node) {
+      switch (node.data.status) {
+        case 'uptodate':
+          return 'mediumseagreen';
+        default:
+          return 'lightcoral';
+      }
+    }")
+  ),
+  controls(),
+  background(),
+  
+  width = "100%",
+  allow_edge_connection = FALSE,
+  use_dagre = TRUE,
+  dagre_direction = "LR",
+  dagre_config = list(nodeWidth = 200, nodeHeight = 50)
+)
 ```

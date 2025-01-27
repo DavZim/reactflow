@@ -19,17 +19,24 @@ import dagre from '@dagrejs/dagre';
 import '@xyflow/react/dist/style.css';
 
 function HTMLNode({ data }) {
+  const is_lr = data?.handle?.direction === "LR";
+  console.log("ir_lr " + is_lr + " data ");
+  console.log(data);
+  
+  const handle1 = is_lr ? Position.Left : Position.Top;
+  const handle2 = is_lr ? Position.Right : Position.Bottom;
+  
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: data.html }}></div>
     
       <Handle
         type="target"
-        position={Position.Top}
+        position={handle1}
       />
       <Handle
         type="source"
-        position={Position.Bottom}
+        position={handle2}
       />
     </>
   );

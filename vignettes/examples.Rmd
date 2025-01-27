@@ -344,6 +344,52 @@ reactflow(
 See also the Vignette on Fully Customized HTML Nodes.
 
 
+### LR Layouts
+
+If you are using Left-to-Right (LR) layouts, either by specifying positions manually or using `use_dagre = TRUE, dagre_direction = "LR"`, you can use a node with `data.handle.position = "LR"` to make the handle appear on the left side of a `html` node.
+
+```{r}
+nodes2 <- list(
+  list(
+    id = "1",
+    type = "html",
+    data = list(
+      html = "I am a <b>HTML</b> node",
+      handle = list(direction = "LR") # this is new here!
+    ),
+    position = list(x = 0, y = 0)
+  ),
+  list(
+    id = "2",
+    type = "html",
+    data = list(
+      html = as.character( # the HTML can be created using htmltools or shiny as well!
+        htmltools::div(
+          style = paste(
+            "color: red; border: 2px solid gray; padding: 10px;",
+            "border-radius: 10px; font-weight: 600;"
+          ),
+          
+          "I am a ", htmltools::code("HTML"), "node"
+        )
+      ),
+      handle = list(direction = "LR") # this is new here!
+    ),
+    position = list(x = 200, y = 0)
+  )
+)
+
+edges2 <- list(
+  list(id = "e1-2", source = "1", target = "2", label = "Edge 1")
+)
+
+reactflow(
+  nodes2,
+  edges2
+)
+```
+
+
 ## Edges
 
 ### Edge Types and Styling
@@ -476,12 +522,9 @@ reactflow(
           return 'gray';
       }
     }")
-  ),
-  color_minimap = TRUE
+  )
 )
 ```
-TODO make minimap colorful
-
 
 
 
