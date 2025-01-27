@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>example_targets • reactflow</title>
+<title>Example `reactflow` of a `targets` Pipeline • reactflow</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="example_targets">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Example `reactflow` of a `targets` Pipeline">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -33,7 +33,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/example_targets.html">example_targets</a></li>
+<li><a class="dropdown-item" href="../articles/example_targets.html">Example `reactflow` of a `targets` Pipeline</a></li>
     <li><a class="dropdown-item" href="../articles/examples.html">Examples</a></li>
     <li><a class="dropdown-item" href="../articles/fully_customized_html_nodes.html">Fully Customized HTML Nodes</a></li>
     <li><a class="dropdown-item" href="../articles/styling_edges.html">Styling Edges</a></li>
@@ -56,11 +56,10 @@
 
 
 
-
-<div class="row">
+<script src="example_targets_files/core-js-2.5.3/shim.min.js"></script><script src="example_targets_files/react-18.2.0/react.min.js"></script><script src="example_targets_files/react-18.2.0/react-dom.min.js"></script><script src="example_targets_files/reactwidget-2.0.0/react-tools.js"></script><script src="example_targets_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="example_targets_files/reactflow-binding-0.0.2/reactflow.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>example_targets</h1>
+      <h1>Example `reactflow` of a `targets` Pipeline</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DavZim/reactflow/blob/master/vignettes/example_targets.Rmd" class="external-link"><code>vignettes/example_targets.Rmd</code></a></small>
@@ -81,9 +80,170 @@ way.</p>
 vignette, the code to create the targets pipeline etc is included in
 <code>reactflow</code> in <code>data-raw/example_targets.R</code> on
 Github.</p>
+<p>This <code>reactflow</code> package provides two sample datasets,
+<code>targets_meta</code> (output of <code><a href="https://docs.ropensci.org/targets/reference/tar_meta.html" class="external-link">targets::tar_meta()</a></code>)
+and <code>targets_network</code> (output of
+<code><a href="https://docs.ropensci.org/targets/reference/tar_network.html" class="external-link">targets::tar_network()</a></code>).</p>
+<p>To prepare the data for the <code>reactflow</code> visualization, we
+need to convert the <code>targets_network</code> data to a format that
+<code>reactflow</code> can understand. That is, we need to convert the
+data.frame to a list of nodes and a list of edges.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davzim/reactflow/" class="external-link">reactflow</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davzim/reactflow/" class="external-link">reactflow</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/bsicons" class="external-link">bsicons</a></span><span class="op">)</span></span>
+<span><span class="va">tar</span> <span class="op">&lt;-</span> <span class="va">targets_network</span></span>
+<span></span>
+<span><span class="co"># merge meta information to identify files</span></span>
+<span><span class="va">tar</span><span class="op">$</span><span class="va">vertices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">tar</span><span class="op">$</span><span class="va">vertices</span>, <span class="va">targets_meta</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"format"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>                      by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">icons</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/bsicons/man/bs_icon.html" class="external-link">bs_icon</a></span><span class="op">(</span><span class="st">"file-earmark-fill"</span>, size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  stem <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/bsicons/man/bs_icon.html" class="external-link">bs_icon</a></span><span class="op">(</span><span class="st">"type"</span>, size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  <span class="st">"function"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/bsicons/man/bs_icon.html" class="external-link">bs_icon</a></span><span class="op">(</span><span class="st">"braces"</span>, size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">tar</span><span class="op">$</span><span class="va">vertices</span><span class="op">)</span><span class="op">)</span>, \<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">el</span> <span class="op">&lt;-</span> <span class="va">tar</span><span class="op">$</span><span class="va">vertices</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="va">name</span> <span class="op">&lt;-</span> <span class="va">el</span><span class="op">$</span><span class="va">name</span></span>
+<span>  <span class="va">icon</span> <span class="op">&lt;-</span> <span class="va">icons</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">el</span><span class="op">$</span><span class="va">format</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">el</span><span class="op">$</span><span class="va">format</span> <span class="op">==</span> <span class="st">"file"</span>, <span class="st">"file"</span>, <span class="va">el</span><span class="op">$</span><span class="va">type</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">el</span><span class="op">$</span><span class="va">status</span> <span class="op">==</span> <span class="st">"uptodate"</span>, </span>
+<span>                 <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">el</span><span class="op">$</span><span class="va">seconds</span><span class="op">)</span>, <span class="st">"NA"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">el</span><span class="op">$</span><span class="va">seconds</span>, <span class="st">"s"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                 <span class="st">"NA"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="va">html</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span></span>
+<span>    <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>      style <span class="op">=</span> <span class="st">"display: flex; flex-direction: row; align-items: center;"</span>,</span>
+<span>      class <span class="op">=</span> <span class="va">el</span><span class="op">$</span><span class="va">status</span>,</span>
+<span>      <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span><span class="va">icon</span>, style <span class="op">=</span> <span class="st">"margin-right: 10px;"</span><span class="op">)</span>,</span>
+<span>      <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>        <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>          style <span class="op">=</span> <span class="st">"font-size: 1.1em; font-weight: bold; color: #999999"</span>,</span>
+<span>          <span class="va">name</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>          style <span class="op">=</span> <span class="st">"font-size: 0.8em; font-weight: 600; color: darkgray;"</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Time: "</span>, <span class="va">time</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="va">el</span><span class="op">$</span><span class="va">name</span>,</span>
+<span>    type <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>html <span class="op">=</span> <span class="va">html</span>,</span>
+<span>                status <span class="op">=</span> <span class="va">el</span><span class="op">$</span><span class="va">status</span>, <span class="co"># for mini-map later on</span></span>
+<span>                handle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="st">"LR"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">tar</span><span class="op">$</span><span class="va">edges</span>, <span class="fl">1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="st">"from"</span><span class="op">]</span><span class="op">]</span>, <span class="va">x</span><span class="op">[[</span><span class="st">"to"</span><span class="op">]</span><span class="op">]</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span>,</span>
+<span>    source <span class="op">=</span> <span class="va">x</span><span class="op">[[</span><span class="st">"from"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    target <span class="op">=</span> <span class="va">x</span><span class="op">[[</span><span class="st">"to"</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>Note we also need to set some general CSS to make the nodes look a
+bit nicer</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">.react-flow__node.react-flow__node-html</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">gray</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--xy-node-background-color</span><span class="op">,</span> <span class="fu">var(</span><span class="va">--xy-node-background-color-default</span><span class="fu">))</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">.react-flow__node.react-flow__node-html</span><span class="in">:has(</span><span class="fu">.outdated</span><span class="in">)</span> {</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  <span class="kw">border-color</span><span class="ch">:</span> <span class="cn">lightcoral</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">lightcoral</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>}</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="fu">.react-flow__node.react-flow__node-html</span><span class="in">:has(</span><span class="fu">.uptodate</span><span class="in">)</span> {</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="kw">border-color</span><span class="ch">:</span> <span class="cn">mediumseagreen</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">mediumseagreen</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>}</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">/* style the handles */</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="fu">.react-flow__handle</span>{</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>}</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">/* make edges a bit thicker */</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="fu">.react-flow__edge</span> <span class="op">&gt;</span> path {</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>    <span class="kw">stroke</span><span class="ch">:</span> <span class="cn">gray</span><span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>    stroke-width<span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>}</span></code></pre></div>
+<style type="text/css">
+.react-flow__node.react-flow__node-html {
+  padding: 10px;
+  border-radius: 15px;
+  border: 4px solid gray;
+  width: 150px;
+  font-size: 12px;
+  text-align: center;
+  background-color: var(--xy-node-background-color, var(--xy-node-background-color-default));
+}
+
+.react-flow__node.react-flow__node-html:has(.outdated) {
+  border-color: lightcoral;
+  color: lightcoral;
+}
+.react-flow__node.react-flow__node-html:has(.uptodate) {
+  border-color: mediumseagreen;
+  color: mediumseagreen;
+}
+
+/* style the handles */
+.react-flow__handle{
+  width: 5px;
+  height: 5px;
+  border-radius: 100px;
+}
+
+/* make edges a bit thicker */
+.react-flow__edge > path {
+    stroke: gray;
+    stroke-width: 3px;
+}
+</style>
+<p>Last but not least, we can create our reactflow like this:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reactflow.html">reactflow</a></span><span class="op">(</span></span>
+<span>  nodes <span class="op">=</span> <span class="va">nodes</span>,</span>
+<span>  edges <span class="op">=</span> <span class="va">edges</span>,</span>
+<span>  <span class="fu"><a href="../reference/mini_map.html">mini_map</a></span><span class="op">(</span></span>
+<span>    pannable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    zoomable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    nodeColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">JS</a></span><span class="op">(</span><span class="st">"</span></span>
+<span><span class="st">    function nodeColor(node) {</span></span>
+<span><span class="st">      switch (node.data.status) {</span></span>
+<span><span class="st">        case 'uptodate':</span></span>
+<span><span class="st">          return 'mediumseagreen';</span></span>
+<span><span class="st">        default:</span></span>
+<span><span class="st">          return 'lightcoral';</span></span>
+<span><span class="st">      }</span></span>
+<span><span class="st">    }"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/controls.html">controls</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/background.html">background</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  width <span class="op">=</span> <span class="st">"100%"</span>,</span>
+<span>  allow_edge_connection <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  use_dagre <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dagre_direction <span class="op">=</span> <span class="st">"LR"</span>,</span>
+<span>  dagre_config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nodeWidth <span class="op">=</span> <span class="fl">200</span>, nodeHeight <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div>
+<div id="htmlwidget-ac96cb3ee4656e2e9ec3" class="reactflow html-widget" style="width:100%;height:432.632880098888px;"></div>
+</div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"ReactFlow","attribs":{"nodes":[{"id":"data","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"uptodate\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-type \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081h1.244zm2.7-7.923L6.34 9.314H3.51l1.4-4.156h.034zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">data<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: 0.003s<\/div>\n  <\/div>\n<\/div>","status":"uptodate","handle":{"direction":"LR"}}},{"id":"file","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"uptodate\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-file-earmark-fill \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">file<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: 0.001s<\/div>\n  <\/div>\n<\/div>","status":"uptodate","handle":{"direction":"LR"}}},{"id":"fit_model","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"uptodate\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-braces \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6zM13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">fit_model<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: NA<\/div>\n  <\/div>\n<\/div>","status":"uptodate","handle":{"direction":"LR"}}},{"id":"get_data","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"uptodate\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-braces \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6zM13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">get_data<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: NA<\/div>\n  <\/div>\n<\/div>","status":"uptodate","handle":{"direction":"LR"}}},{"id":"model","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"uptodate\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-type \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081h1.244zm2.7-7.923L6.34 9.314H3.51l1.4-4.156h.034zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">model<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: 0.005s<\/div>\n  <\/div>\n<\/div>","status":"uptodate","handle":{"direction":"LR"}}},{"id":"plot","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"outdated\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-type \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081h1.244zm2.7-7.923L6.34 9.314H3.51l1.4-4.156h.034zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">plot<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: NA<\/div>\n  <\/div>\n<\/div>","status":"outdated","handle":{"direction":"LR"}}},{"id":"plot_model","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"uptodate\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-braces \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6zM13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">plot_model<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: NA<\/div>\n  <\/div>\n<\/div>","status":"uptodate","handle":{"direction":"LR"}}},{"id":"plot_title","type":"html","data":{"html":"<div style=\"display: flex; flex-direction: row; align-items: center;\" class=\"outdated\">\n  <div style=\"margin-right: 10px;\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" class=\"bi bi-type \" style=\"height:15px;width:15px;fill:currentColor;vertical-align:-0.125em;\" aria-hidden=\"true\" role=\"img\" ><path d=\"m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081h1.244zm2.7-7.923L6.34 9.314H3.51l1.4-4.156h.034zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525z\"><\/path><\/svg><\/div>\n  <div>\n    <div style=\"font-size: 1.1em; font-weight: bold; color: #999999\">plot_title<\/div>\n    <div style=\"font-size: 0.8em; font-weight: 600; color: darkgray;\">Time: NA<\/div>\n  <\/div>\n<\/div>","status":"outdated","handle":{"direction":"LR"}}}],"edges":[{"id":"data_plot","source":"data","target":"plot"},{"id":"model_plot","source":"model","target":"plot"},{"id":"plot_model_plot","source":"plot_model","target":"plot"},{"id":"plot_title_plot","source":"plot_title","target":"plot"},{"id":"file_data","source":"file","target":"data"},{"id":"get_data_data","source":"get_data","target":"data"},{"id":"data_model","source":"data","target":"model"},{"id":"fit_model_model","source":"fit_model","target":"model"}],"allow_edge_connection":false,"use_dagre":true,"dagre_direction":"LR","dagre_config":{"nodeWidth":200,"nodeHeight":50}},"children":[{"name":"MiniMap","attribs":{"pannable":true,"zoomable":true,"nodeColor":"\n    function nodeColor(node) {\n      switch (node.data.status) {\n        case 'uptodate':\n          return 'mediumseagreen';\n        default:\n          return 'lightcoral';\n      }\n    }"},"children":[]},{"name":"Background","attribs":[],"children":[]},{"name":"Controls","attribs":[],"children":[]}]},"class":"reactR_markup"},"evals":["tag.children.0.attribs.nodeColor"],"jsHooks":[]}</script></main>
 </div>
 
 

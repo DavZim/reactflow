@@ -33,7 +33,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/example_targets.html">example_targets</a></li>
+<li><a class="dropdown-item" href="../articles/example_targets.html">Example `reactflow` of a `targets` Pipeline</a></li>
     <li><a class="dropdown-item" href="../articles/examples.html">Examples</a></li>
     <li><a class="dropdown-item" href="../articles/fully_customized_html_nodes.html">Fully Customized HTML Nodes</a></li>
     <li><a class="dropdown-item" href="../articles/styling_edges.html">Styling Edges</a></li>
@@ -85,41 +85,41 @@ border, size, radius, etc. This is mostly copied from the default style
 for <code>react-flow__node-default</code>. Then, we also style our
 handle a little-bit to make it a bit more distinct.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">.react-flow__node.react-flow__node-html</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="kw">border</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#00808073</span><span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="kw">width</span><span class="ch">:</span> <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="kw">font-size</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="kw">color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--xy-node-color</span><span class="op">,</span> <span class="fu">var(</span><span class="va">--xy-node-color-default</span><span class="fu">))</span><span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--xy-node-background-color</span><span class="op">,</span> <span class="fu">var(</span><span class="va">--xy-node-background-color-default</span><span class="fu">))</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#00808073</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--xy-node-color</span><span class="op">,</span> <span class="fu">var(</span><span class="va">--xy-node-color-default</span><span class="fu">))</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--xy-node-background-color</span><span class="op">,</span> <span class="fu">var(</span><span class="va">--xy-node-background-color-default</span><span class="fu">))</span><span class="op">;</span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>}</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">.react-flow__handle</span>{</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="kw">width</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">em</span><span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="kw">height</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="kw">background-color</span><span class="ch">:</span> <span class="cn">teal</span><span class="op">;</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">5</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">teal</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>}</span></code></pre></div>
 <style type="text/css">
 .react-flow__node.react-flow__node-html {
-padding: 10px;
-border-radius: 15px;
-border: 4px solid #00808073;
-width: 150px;
-font-size: 12px;
-color: var(--xy-node-color, var(--xy-node-color-default));
-text-align: center;
-background-color: var(--xy-node-background-color, var(--xy-node-background-color-default));
+  padding: 10px;
+  border-radius: 15px;
+  border: 4px solid #00808073;
+  width: 150px;
+  font-size: 12px;
+  color: var(--xy-node-color, var(--xy-node-color-default));
+  text-align: center;
+  background-color: var(--xy-node-background-color, var(--xy-node-background-color-default));
 }
 
 .react-flow__handle{
-width: 3em;
-height: 5px;
-background-color: teal;
-border: none;
-border-radius: 0;
+  width: 3em;
+  height: 5px;
+  background-color: teal;
+  border: none;
+  border-radius: 0;
 }
 </style>
 </div>
